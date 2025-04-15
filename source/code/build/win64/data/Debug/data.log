@@ -8,7 +8,6 @@ C:\Users\hoang\Desktop\Visual-Computing-Game\source\code\intern\src\data\data_ma
 C:\Users\hoang\Desktop\Visual-Computing-Game\source\code\intern\src\data\data_map.cpp(159,30): warning C4566: Das durch den universellen Zeichennamen "\u2192" dargestellte Zeichen kann in der aktuellen Codepage (1252) nicht dargestellt werden.
 C:\Users\hoang\Desktop\Visual-Computing-Game\source\code\intern\src\data\data_map.cpp(161,30): warning C4566: Das durch den universellen Zeichennamen "\u2192" dargestellte Zeichen kann in der aktuellen Codepage (1252) nicht dargestellt werden.
 C:\Users\hoang\Desktop\Visual-Computing-Game\source\code\intern\src\data\data_map.cpp(162,30): warning C4566: Das durch den universellen Zeichennamen "\u2192" dargestellte Zeichen kann in der aktuellen Codepage (1252) nicht dargestellt werden.
-  data_meta_entity.cpp
   data_sector.cpp
   Code wird generiert...
   data.vcxproj -> C:\Users\hoang\Desktop\Visual-Computing-Game\source\code\build\win64\data\Debug\data_debug.lib

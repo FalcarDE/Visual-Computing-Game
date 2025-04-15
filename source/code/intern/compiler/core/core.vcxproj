@@ -163,12 +163,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\core\*.h" />
-    <ClInclude Include="..\..\src\core\core_event.cpp" />
     <ClInclude Include="..\..\src\core\core_id_manager.cpp" />
     <ClInclude Include="..\..\src\core\core_log.cpp" />
     <ClInclude Include="..\..\src\core\core_time.cpp" />
     <ClInclude Include="..\..\src\core\core\*.h" />
     <ClInclude Include="..\..\src\core\core\*.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\core\core_event_system.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

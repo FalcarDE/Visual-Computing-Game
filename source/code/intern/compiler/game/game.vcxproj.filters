@@ -51,9 +51,6 @@
     <ClCompile Include="..\..\src\game\game_unload_map_phase.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\game\test.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\game\game_application.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
@@ -83,7 +80,28 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\game\*.h">
+    <ClInclude Include="..\..\src\game\game_finalize_phase.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\game_initialize_phase.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\game_load_map_phase.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\game_main_menu_phase.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\game_phase.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\game_play_phase.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\game_unload_map_phase.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\test.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\game\*.h">
@@ -140,7 +158,7 @@
     <ClInclude Include="..\..\src\game\game_unload_map_phase.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\game\test.h">
+    <ClInclude Include="..\..\src\game\game_application.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

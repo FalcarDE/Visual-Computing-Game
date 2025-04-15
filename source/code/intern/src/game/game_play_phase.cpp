@@ -4,6 +4,8 @@
 #include "../graphics/graphics_facets.h"
 #include "../graphics/graphics_play_phase.h"
 #include "../data/data_entity.h"
+#include "../core/core_event_system.h"  
+#include "../core/core_log.h"
 
 
 #include <SFML/Graphics.hpp>
@@ -167,32 +169,95 @@ namespace Game
             std::cout << "[GamePhase] Welt, Spieler und mittiges Hindernis erzeugt\n";
         }
 
+
         // -----------------------------------------------------------------------------
         // Eingabe, Logik und Rendering
         // -----------------------------------------------------------------------------
+
         m_pLogic->Update(1.0f / 60.0f);
 
         if (m_pLogic->ShouldTriggerPhaseChange())
         {
-            Game::CPhase::EType next = m_pLogic->GetNextPhase();
+            Game::CPhase::EType Next = m_pLogic->GetNextPhase();
 
             // Spezialfall: Wir wollen zuerst UnloadMap → dann MainMenu
-            if (next == Game::CPhase::MainMenu)
+            if (Next == Game::CPhase::MainMenu)
             {
                 return Game::CPhase::Unload;
             }
 
-            return next;
+            return Next;
         }
 
+
+        // -----------------------------------------------------------------------------
+        // -----------------------------------------------------------------------------
+        // Integration des Core-Event-Systems
+        // -----------------------------------------------------------------------------
+        //
+        // Hier wird das zentrale Event-System theoretisch in die Spielphase eingebunden.
+        // Events wie Tastendrücke oder das Schließen des Fensters werden erkannt,
+        // in eigene Event-Klassen (z. B. CKeyPressedEvent) übersetzt und über den
+        // Dispatcher (CEventDispatcher) weitergeleitet.
+        //
+        // Systeme könnten sich über Subscribe(...) für bestimmte Eventtypen registrieren
+        // und darauf reagieren.
+        //
+        // Problem:
+        // Der Zugriff auf den Logger (Core::Logger::Log(...)) schlägt aktuell zur
+        Core::CEventDispatcher EventDispatcher;
+
+        EventDispatcher.Subscribe(Core::EEventType::KeyPressed, [](const Core::IEvent& _rEvent)
+            {
+                const Core::CKeyPressedEvent& rKeyEvent = static_cast<const Core::CKeyPressedEvent&>(_rEvent);
+                // Core::Logger::Log("Taste gedrückt: %d", rKeyEvent.m_KeyCode);
+            });
+
+        // -----------------------------------------------------------------------------
+        // -----------------------------------------------------------------------------
+        // SFML-Eventverarbeitung und Anbindung an das Core-Event-System
+        // -----------------------------------------------------------------------------
+        //
+        // In dieser Schleife werden native SFML-Ereignisse abgefragt (z. B. Tastendruck,
+        // Fenster schließen). Diese werden anschließend in eigene Event-Klassen aus dem
+        // Core-System (CKeyPressedEvent, CWindowCreatedEvent) übersetzt und über den
+        // EventDispatcher weitergegeben.
+        //
+        // Dadurch können andere Systeme unabhängig auf Benutzereingaben reagieren,
+        // ohne direkt an SFML gebunden zu sein.
+        //
         sf::Event Event;
         while (m_pWindow->pollEvent(Event))
         {
-            if (Event.type == sf::Event::Closed)
+            switch (Event.type)
+            {
+            case sf::Event::Closed:
             {
                 m_pWindow->close();
+
+                Core::CWindowCreatedEvent CloseEvent("Closed", 0, 0);
+                EventDispatcher.Dispatch(CloseEvent);
+
+                break;
+            }
+
+            case sf::Event::KeyPressed:
+            {
+                Core::CKeyPressedEvent KeyEvent(static_cast<int>(Event.key.code));
+                EventDispatcher.Dispatch(KeyEvent);
+
+                break;
+            }
+
+            default:
+            {
+                break;
+            }
             }
         }
+
+        // -----------------------------------------------------------------------------
+
 
         m_pWindow->clear(sf::Color::White);
         m_pGfx->Draw(*m_pWindow);

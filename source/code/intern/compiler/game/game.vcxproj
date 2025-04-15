@@ -120,6 +120,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)..\extern\sfml\inc;
 $(SolutionDir)..\extern\sfml\inc\SFML;
+$(SolutionDir)build\win64\core\Debug
 </AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
