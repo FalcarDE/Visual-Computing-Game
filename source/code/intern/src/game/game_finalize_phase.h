@@ -7,9 +7,11 @@ namespace Game
     class CFinalizePhase : public CPhase
     {
     public:
+
         static CFinalizePhase& GetInstance();
 
     private:
+
         CFinalizePhase();
         ~CFinalizePhase() override;
 

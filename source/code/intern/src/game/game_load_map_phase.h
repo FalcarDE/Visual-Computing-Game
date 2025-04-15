@@ -10,22 +10,25 @@ namespace Game
     class CLoadMapPhase : public CPhase
     {
     public:
+
         static CLoadMapPhase& GetInstance();
 
     private:
-        CLoadMapPhase();
-        ~CLoadMapPhase() override;
 
         void OnInternEnter() override;
         EType OnInternRun() override;
         void OnInternLeave() override;
 
-    private:
-        std::unique_ptr<Data::CMetaEntity> m_GroundMeta;
+        CLoadMapPhase();
+        ~CLoadMapPhase() override;
+
+        CLoadMapPhase(const CLoadMapPhase&) = delete;
+        CLoadMapPhase& operator=(const CLoadMapPhase&) = delete;
+
+        std::unique_ptr<Data::CMetaEntity>    m_GroundMeta;
         std::unique_ptr<Graphics::CMetaFacet> m_GroundFacet;
 
-        std::unique_ptr<Data::CMetaEntity> m_ObstacleMeta;
+        std::unique_ptr<Data::CMetaEntity>    m_ObstacleMeta;
         std::unique_ptr<Graphics::CMetaFacet> m_ObstacleFacet;
-
     };
 }

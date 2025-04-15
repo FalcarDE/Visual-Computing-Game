@@ -3,28 +3,34 @@
 
 namespace Data
 {
+    // -----------------------------------------------------------------------------
+
     void CSector::AddEntity(CEntity& _rEntity)
     {
-        SEntityCategory::Enum category = _rEntity.GetCategory();
+        SEntityCategory::Enum Category = _rEntity.GetCategory();
 
-        if (category >= 0 && category < SEntityCategory::NumberOfMembers)
+        if (Category >= 0 && Category < SEntityCategory::NumberOfMembers)
         {
-            m_Folders[category].AddEntity(_rEntity);
+            m_Folders[Category].AddEntity(_rEntity);
         }
     }
+
+    // -----------------------------------------------------------------------------
 
     void CSector::RemoveEntity(CEntity& _rEntity)
     {
-        SEntityCategory::Enum category = _rEntity.GetCategory();
+        SEntityCategory::Enum Category = _rEntity.GetCategory();
 
-        if (category >= 0 && category < SEntityCategory::NumberOfMembers)
+        if (Category >= 0 && Category < SEntityCategory::NumberOfMembers)
         {
-            m_Folders[category].RemoveEntity(_rEntity);
+            m_Folders[Category].RemoveEntity(_rEntity);
         }
     }
 
-    CEntityFolder& CSector::GetFolder(SEntityCategory::Enum category)
+    // -----------------------------------------------------------------------------
+
+    CEntityFolder& CSector::GetFolder(SEntityCategory::Enum _Category)
     {
-        return m_Folders[category];
+        return m_Folders[_Category];
     }
 }

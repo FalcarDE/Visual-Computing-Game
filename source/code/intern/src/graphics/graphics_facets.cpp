@@ -1,84 +1,111 @@
 ﻿#include "graphics_facets.h"
+
 #include <cassert>
 #include <iostream>
 #include <tinyxml2.h>
 
 namespace Graphics
 {
-    // ==================== CMetaFacet ====================
+    // -----------------------------------------------------------------------------
 
     CMetaFacet::CMetaFacet(const std::string& _TexturePath)
         : m_TexturePath(_TexturePath)
     {
     }
 
+    // -----------------------------------------------------------------------------
+
     const std::string& CMetaFacet::GetTexturePath() const
     {
         return m_TexturePath;
     }
+
+    // -----------------------------------------------------------------------------
 
     void CMetaFacet::SetTexturePath(const std::string& _Path)
     {
         m_TexturePath = _Path;
     }
 
-    // ==================== CFacet ====================
+    // -----------------------------------------------------------------------------
+
+    bool CMetaFacet::LoadFromXML(const std::string& _XmlPath)
+    {
+        using namespace tinyxml2;
+
+        XMLDocument Doc;
+        if (Doc.LoadFile(_XmlPath.c_str()) != XML_SUCCESS)
+        {
+            std::cerr << "[MetaFacet] Fehler beim Laden: " << _XmlPath << std::endl;
+            return false;
+        }
+
+        XMLElement* pRoot = Doc.FirstChildElement("Graphic");
+        if (!pRoot)
+        {
+            return false;
+        }
+
+        const char* pPath = pRoot->FirstChildElement("Texture")->GetText();
+        if (!pPath)
+        {
+            return false;
+        }
+
+        m_TexturePath = pPath;
+        return true;
+    }
+
+    // -----------------------------------------------------------------------------
 
     CFacet::CFacet()
-        : m_Position(0.f, 0.f), m_Size(0.f, 0.f), m_MetaFacet(nullptr)
+        : m_Position(0.f, 0.f)
+        , m_Size(0.f, 0.f)
+        , m_pMetaFacet(nullptr)
     {
     }
 
-    void CFacet::SetPosition(float x, float y)
+    // -----------------------------------------------------------------------------
+
+    void CFacet::SetPosition(float _X, float _Y)
     {
-        m_Position.first = x;
-        m_Position.second = y;
+        m_Position.first = _X;
+        m_Position.second = _Y;
     }
 
-    void CFacet::SetSize(float width, float height)
+    // -----------------------------------------------------------------------------
+
+    void CFacet::SetSize(float _Width, float _Height)
     {
-        m_Size.first = width;
-        m_Size.second = height;
+        m_Size.first = _Width;
+        m_Size.second = _Height;
     }
 
-    void CFacet::SetMetaFacet(CMetaFacet* pMeta)
+    // -----------------------------------------------------------------------------
+
+    void CFacet::SetMetaFacet(CMetaFacet* _pMeta)
     {
-        m_MetaFacet = pMeta;
+        m_pMetaFacet = _pMeta;
     }
+
+    // -----------------------------------------------------------------------------
 
     const std::pair<float, float>& CFacet::GetPosition() const
     {
         return m_Position;
     }
 
+    // -----------------------------------------------------------------------------
+
     const std::pair<float, float>& CFacet::GetSize() const
     {
         return m_Size;
     }
 
+    // -----------------------------------------------------------------------------
+
     const CMetaFacet* CFacet::GetMetaFacet() const
     {
-        return m_MetaFacet;
-    }
-
-    bool CMetaFacet::LoadFromXML(const std::string& xmlPath)
-    {
-        using namespace tinyxml2;
-
-        XMLDocument doc;
-        if (doc.LoadFile(xmlPath.c_str()) != XML_SUCCESS)
-        {
-            std::cerr << "[MetaFacet] Fehler beim Laden: " << xmlPath << std::endl;
-            return false;
-        }
-
-        XMLElement* root = doc.FirstChildElement("Graphic");
-        if (!root) return false;
-
-        const char* path = root->FirstChildElement("Texture")->GetText();
-        if (!path) return false;
-
-        m_TexturePath = path;
-        return true;
+        return m_pMetaFacet;
     }
 }

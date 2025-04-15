@@ -1,49 +1,51 @@
 ﻿#include "data_map.h"
 #include "data_entity.h"
-#include <iostream>
+
 #include <cassert>
-
-
-
-using Core::AABB2Float;
-using namespace std;
+#include <iostream>
 
 namespace Data
 {
+    // -----------------------------------------------------------------------------
+
     CEntityIterator CMap::BeginEntity(Core::AABB2Float& _rAABB, SEntityCategory::Enum _Category)
     {
         try
         {
-            constexpr int SECTOR_WIDTH = 100;
-            constexpr int SECTOR_HEIGHT = 100;
+            constexpr int SectorWidth = 100;
+            constexpr int SectorHeight = 100;
 
-            float minX = _rAABB.GetMin()[0];
-            float minY = _rAABB.GetMin()[1];
-            float maxX = _rAABB.GetMax()[0];
-            float maxY = _rAABB.GetMax()[1];
+            float MinX = _rAABB.GetMin()[0];
+            float MinY = _rAABB.GetMin()[1];
+            float MaxX = _rAABB.GetMax()[0];
+            float MaxY = _rAABB.GetMax()[1];
 
-            int startX = static_cast<int>(minX) / SECTOR_WIDTH;
-            int startY = static_cast<int>(minY) / SECTOR_HEIGHT;
-            int endX = static_cast<int>(maxX) / SECTOR_WIDTH;
-            int endY = static_cast<int>(maxY) / SECTOR_HEIGHT;
+            int StartX = static_cast<int>(MinX) / SectorWidth;
+            int StartY = static_cast<int>(MinY) / SectorHeight;
+            int EndX = static_cast<int>(MaxX) / SectorWidth;
+            int EndY = static_cast<int>(MaxY) / SectorHeight;
 
-            for (int y = startY; y <= endY; ++y)
+            for (int y = StartY; y <= EndY; ++y)
             {
-                for (int x = startX; x <= endX; ++x)
+                for (int x = StartX; x <= EndX; ++x)
                 {
                     CSector* pSector = GetSectorAt(x, y);
-                    if (!pSector) continue;
-
-                    CEntityFolder& folder = pSector->GetFolder(_Category);
-
-                    for (CEntityIterator _Where = folder.Begin(); _Where != folder.End(); ++_Where)
+                    if (!pSector)
                     {
-                        CEntity& entity = *_Where;
+                        continue;
+                    }
 
-                        assert(entity.GetMeta() != nullptr);
+                    CEntityFolder& Folder = pSector->GetFolder(_Category);
 
-                        if (entity.GetAABB().Intersects(_rAABB))
-                            return _Where;
+                    for (CEntityIterator It = Folder.Begin(); It != Folder.End(); ++It)
+                    {
+                        CEntity& Entity = *It;
+                        assert(Entity.GetMeta() != nullptr);
+
+                        if (Entity.GetAABB().Intersects(_rAABB))
+                        {
+                            return It;
+                        }
                     }
                 }
             }
@@ -58,25 +60,7 @@ namespace Data
 
     // -----------------------------------------------------------------------------
 
-    CSector* CMap::GetSectorAt(int x, int y)
-    {
-        try
-        {
-            if (x < 0 || x >= NumColumns || y < 0 || y >= NumRows)
-                return nullptr;
-
-            return &m_Sectors[y * NumColumns + x];
-        }
-        catch (...)
-        {
-            std::cerr << "[EXCEPTION] CMap::GetSectorAt: Ungültiger Zugriff!\n";
-            return nullptr;
-        }
-    }
-
-    // -----------------------------------------------------------------------------
-
-    CEntityIterator CMap::NextEntity(CEntityIterator _Where, AABB2Float& _rAABB, SEntityCategory::Enum _Category)
+    CEntityIterator CMap::NextEntity(CEntityIterator _Where, Core::AABB2Float& _rAABB, SEntityCategory::Enum _Category)
     {
         try
         {
@@ -84,12 +68,13 @@ namespace Data
 
             while (_Where != EndEntity())
             {
-                CEntity& entity = *_Where;
+                CEntity& Entity = *_Where;
+                assert(Entity.GetMeta() != nullptr);
 
-                assert(entity.GetMeta() != nullptr);
-
-                if (entity.GetAABB().Intersects(_rAABB))
+                if (Entity.GetAABB().Intersects(_rAABB))
+                {
                     return _Where;
+                }
 
                 ++_Where;
             }
@@ -104,7 +89,7 @@ namespace Data
 
     // -----------------------------------------------------------------------------
 
-    CEntityIterator CMap::BeginEntity(AABB2Float& _rAABB)
+    CEntityIterator CMap::BeginEntity(Core::AABB2Float& _rAABB)
     {
         (void)_rAABB;
         return EndEntity();
@@ -112,7 +97,7 @@ namespace Data
 
     // -----------------------------------------------------------------------------
 
-    CEntityIterator CMap::NextEntity(CEntityIterator _Where, AABB2Float& _rAABB)
+    CEntityIterator CMap::NextEntity(CEntityIterator _Where, Core::AABB2Float& _rAABB)
     {
         (void)_Where;
         (void)_rAABB;
@@ -128,42 +113,57 @@ namespace Data
 
     // -----------------------------------------------------------------------------
 
-    void CMap::AddEntity(CEntity& entity)
+    CSector* CMap::GetSectorAt(int _X, int _Y)
     {
         try
         {
-            assert(entity.GetMeta() != nullptr && "CMap::AddEntity → Entity hat keine MetaEntity!");
+            if (_X < 0 || _X >= NumColumns || _Y < 0 || _Y >= NumRows)
+            {
+                return nullptr;
+            }
 
-            SEntityCategory::Enum category = entity.GetCategory();
+            return &m_Sectors[_Y * NumColumns + _X];
+        }
+        catch (...)
+        {
+            std::cerr << "[EXCEPTION] CMap::GetSectorAt: Ungültiger Zugriff!\n";
+            return nullptr;
+        }
+    }
 
-            const auto& aabb = entity.GetAABB();
-            const auto& center = aabb.GetCenter();
-            float centerX = center[0];
-            float centerY = center[1];
+    // -----------------------------------------------------------------------------
 
-            constexpr int SECTOR_WIDTH = 100;
-            constexpr int SECTOR_HEIGHT = 100;
+    void CMap::AddEntity(CEntity& _rEntity)
+    {
+        try
+        {
+            assert(_rEntity.GetMeta() != nullptr && "CMap::AddEntity → Entity hat keine MetaEntity!");
 
-            int sectorX = static_cast<int>(centerX) / SECTOR_WIDTH;
-            int sectorY = static_cast<int>(centerY) / SECTOR_HEIGHT;
+            SEntityCategory::Enum Category = _rEntity.GetCategory();
+            const auto& AABB = _rEntity.GetAABB();
+            const auto& Center = AABB.GetCenter();
 
-            CSector* pSector = GetSectorAt(sectorX, sectorY);
+            float CenterX = Center[0];
+            float CenterY = Center[1];
+
+            constexpr int SectorWidth = 100;
+            constexpr int SectorHeight = 100;
+
+            int SectorX = static_cast<int>(CenterX) / SectorWidth;
+            int SectorY = static_cast<int>(CenterY) / SectorHeight;
+
+            CSector* pSector = GetSectorAt(SectorX, SectorY);
             if (!pSector)
             {
-                std::cerr << "[ERROR] AddEntity: Ungültiger Sektor bei Position (" << centerX << ", " << centerY << ")\n";
-
-                std::cerr << " → Entity AABB: Min("
-                    << aabb.GetMin()[0] << ", " << aabb.GetMin()[1]
-                    << ") Max(" << aabb.GetMax()[0] << ", " << aabb.GetMax()[1]
-                    << ")\n";
-
-                std::cerr << " → Berechneter Sektor: (" << sectorX << ", " << sectorY << ")\n";
+                std::cerr << "[ERROR] AddEntity: Ungültiger Sektor bei Position (" << CenterX << ", " << CenterY << ")\n";
+                std::cerr << " → Entity AABB: Min(" << AABB.GetMin()[0] << ", " << AABB.GetMin()[1]
+                    << ") Max(" << AABB.GetMax()[0] << ", " << AABB.GetMax()[1] << ")\n";
+                std::cerr << " → Berechneter Sektor: (" << SectorX << ", " << SectorY << ")\n";
                 std::cerr << " → Mapgröße: Spalten = " << NumColumns << ", Reihen = " << NumRows << "\n";
-
                 return;
             }
 
-            pSector->GetFolder(category).AddEntity(entity);
+            pSector->GetFolder(Category).AddEntity(_rEntity);
         }
         catch (const std::exception& e)
         {

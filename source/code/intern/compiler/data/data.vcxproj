@@ -160,8 +160,23 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\data\*.h" />
-    <ClCompile Include="..\..\src\data\*.cpp" />
+    <ClInclude Include="..\..\src\data\data_entity.h" />
+    <ClInclude Include="..\..\src\data\data_entity_category.h" />
+    <ClInclude Include="..\..\src\data\data_entity_folder.h" />
+    <ClInclude Include="..\..\src\data\data_entity_iterator.h" />
+    <ClInclude Include="..\..\src\data\data_entity_link.h" />
+    <ClInclude Include="..\..\src\data\data_entity_list.h" />
+    <ClInclude Include="..\..\src\data\data_map.h" />
+    <ClInclude Include="..\..\src\data\data_meta_entity.h" />
+    <ClInclude Include="..\..\src\data\data_sector.h" />
+    <ClCompile Include="..\..\src\data\data_entity.cpp" />
+    <ClCompile Include="..\..\src\data\data_entity_folder.cpp" />
+    <ClCompile Include="..\..\src\data\data_entity_iterator.cpp" />
+    <ClCompile Include="..\..\src\data\data_entity_link.cpp" />
+    <ClCompile Include="..\..\src\data\data_entity_list.cpp" />
+    <ClCompile Include="..\..\src\data\data_map.cpp" />
+    <ClCompile Include="..\..\src\data\data_meta_entity.cpp" />
+    <ClCompile Include="..\..\src\data\data_sector.cpp" />
     <ClInclude Include="..\..\src\data\entity\*.h" />
     <ClCompile Include="..\..\src\data\entity\*.cpp" />
   </ItemGroup>

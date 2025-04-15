@@ -18,23 +18,33 @@ using namespace Graphics;
 
 namespace Game
 {
+    // -----------------------------------------------------------------------------
     CPlayPhase::CPlayPhase()
+        : m_EntitiesCreated(false)
     {
-        m_pMap = std::make_unique<CMap>();
-        m_pGfx = std::make_unique<CGraphicsPlayPhase>();
+        m_pMap = std::make_unique<Data::CMap>();
+        m_pGfx = std::make_unique<Graphics::CGraphicsPlayPhase>();
         m_pGfx->SetMap(m_pMap.get());
     }
 
+
+    // -----------------------------------------------------------------------------
     CPlayPhase::~CPlayPhase() = default;
 
+    // -----------------------------------------------------------------------------
     CPlayPhase& CPlayPhase::GetInstance()
     {
-        static CPlayPhase instance;
-        return instance;
+        static CPlayPhase s_Instance;
+        return s_Instance;
     }
 
+    // -----------------------------------------------------------------------------
     void CPlayPhase::OnInternEnter()
     {
+        // -----------------------------------------------------------------------------
+        // Fenster und Ressourcen vorbereiten
+        // 
+
         std::cout << "[GamePhase] Enter\n";
 
         // Fenster erzeugen
@@ -68,8 +78,12 @@ namespace Game
         std::cout << "[GamePhase] Setup done\n";
     }
 
+    // -----------------------------------------------------------------------------
     CPhase::EType CPlayPhase::OnInternRun()
     {
+        // -----------------------------------------------------------------------------
+        // Initiales Entity-Setup (nur einmal)
+        // -----------------------------------------------------------------------------
         if (!m_EntitiesCreated)
         {
             const float tileWidth = 40.0f;
@@ -153,10 +167,11 @@ namespace Game
             std::cout << "[GamePhase] Welt, Spieler und mittiges Hindernis erzeugt\n";
         }
 
-        // Eingabe + Logik
+        // -----------------------------------------------------------------------------
+        // Eingabe, Logik und Rendering
+        // -----------------------------------------------------------------------------
         m_pLogic->Update(1.0f / 60.0f);
 
-        // Abbruchbedingung prüfen
         if (m_pLogic->ShouldTriggerPhaseChange())
         {
             Game::CPhase::EType next = m_pLogic->GetNextPhase();
@@ -170,20 +185,23 @@ namespace Game
             return next;
         }
 
-        sf::Event event;
-        while (m_pWindow->pollEvent(event))
+        sf::Event Event;
+        while (m_pWindow->pollEvent(Event))
         {
-            if (event.type == sf::Event::Closed)
+            if (Event.type == sf::Event::Closed)
+            {
                 m_pWindow->close();
+            }
         }
 
         m_pWindow->clear(sf::Color::White);
         m_pGfx->Draw(*m_pWindow);
         m_pWindow->display();
 
-        return EType::Play;
+        return CPhase::Play;
     }
 
+    // -----------------------------------------------------------------------------
     void CPlayPhase::OnInternLeave()
     {
         std::cout << "[GamePhase] Leave\n";
@@ -216,13 +234,15 @@ namespace Game
         }
     }
 
-
+    // -----------------------------------------------------------------------------
     void CPlayPhase::ResetWorld()
     {
+        // -----------------------------------------------------------------------------
+        // Spieler zurück auf Startposition setzen
+        // -----------------------------------------------------------------------------
         std::cout << "[GamePhase] ResetWorld → Welt wird zurückgesetzt...\n";
 
 
-        // Spieler zurück auf Startposition
         if (m_pLogic && m_pLogic->GetPlayer())
         {
             CEntity* player = m_pLogic->GetPlayer();
@@ -248,7 +268,6 @@ namespace Game
 
             m_pLogic->SetPlayer(player);  
         }
-
     }
 }
 

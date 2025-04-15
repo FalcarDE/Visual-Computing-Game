@@ -1,31 +1,53 @@
 #include "game_phase.h"
 
-void Game::CPhase::OnEnter()
+namespace Game
 {
-    OnInternEnter();
-}
+    // -----------------------------------------------------------------------------
 
-Game::CPhase::EType Game::CPhase::OnRun()
-{
-    return OnInternRun();  
-}
+    void CPhase::OnEnter()
+    {
+        OnInternEnter();
+    }
 
-void Game::CPhase::OnLeave()
-{
-    OnInternLeave();
-}
+    // -----------------------------------------------------------------------------
 
-void Game::CPhase::OnInternEnter()
-{
-    // Optional: Default-Implementierung (leer)
-}
+    CPhase::EType CPhase::OnRun()
+    {
+        return OnInternRun();
+    }
 
-Game::CPhase::EType Game::CPhase::OnInternRun()
-{
-    return CPhase::Undefined;  // Oder beliebiger Default
-}
+    // -----------------------------------------------------------------------------
 
-void Game::CPhase::OnInternLeave()
-{
-    // Optional: Default-Implementierung (leer)
+    void CPhase::OnLeave()
+    {
+        OnInternLeave();
+    }
+
+    // -----------------------------------------------------------------------------
+
+    void CPhase::OnInternEnter()
+    {
+        // -----------------------------------------------------------------------------
+        // Optional: Default-Implementierung (leer)
+        // -----------------------------------------------------------------------------
+    }
+
+    // -----------------------------------------------------------------------------
+
+    CPhase::EType CPhase::OnInternRun()
+    {
+        // -----------------------------------------------------------------------------
+        // Optional: Default-Implementierung
+        // -----------------------------------------------------------------------------
+        return CPhase::Undefined;
+    }
+
+    // -----------------------------------------------------------------------------
+
+    void CPhase::OnInternLeave()
+    {
+        // -----------------------------------------------------------------------------
+        // Optional: Default-Implementierung (leer)
+        // -----------------------------------------------------------------------------
+    }
 }

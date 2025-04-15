@@ -1,51 +1,75 @@
 ﻿#include "logic_system.h"
+
+#include "../core/core_aabb.h"
 #include "../data/data_entity.h"
 #include "../data/data_map.h"
-#include "../core/core_aabb.h"
-#include <SFML/Window/Keyboard.hpp>
-#include <SFML/Graphics/RenderWindow.hpp>
-#include <iostream>
-#include <cassert>
 #include "../graphics/graphics_facets.h"
+
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Window/Keyboard.hpp>
+
+#include <cassert>
+#include <iostream>
 
 namespace Logic
 {
+    // -----------------------------------------------------------------------------
+
     CLogicSystem::CLogicSystem()
-        : m_pPlayer(nullptr), m_pMap(nullptr), m_pWindow(nullptr), m_MoveCooldown(0.0f), m_ShouldChangePhase(false)
+        : m_pPlayer(nullptr)
+        , m_pMap(nullptr)
+        , m_pWindow(nullptr)
+        , m_MoveCooldown(0.0f)
+        , m_ShouldChangePhase(false)
+        , m_NextPhase(Game::CPhase::Undefined)
     {
     }
+
+    // -----------------------------------------------------------------------------
 
     Data::CEntity* CLogicSystem::GetPlayer()
     {
         return m_pPlayer;
     }
 
-    void CLogicSystem::SetPlayer(Data::CEntity* pPlayer)
+    // -----------------------------------------------------------------------------d
+
+    void CLogicSystem::SetPlayer(Data::CEntity* _pPlayer)
     {
-        m_pPlayer = pPlayer;
+        m_pPlayer = _pPlayer;
     }
 
-    void CLogicSystem::SetMap(Data::CMap* pMap)
+    // -----------------------------------------------------------------------------
+
+    void CLogicSystem::SetMap(Data::CMap* _pMap)
     {
-        m_pMap = pMap;
+        m_pMap = _pMap;
     }
 
-    void CLogicSystem::SetWindow(sf::RenderWindow* pWindow)
+    // -----------------------------------------------------------------------------
+
+    void CLogicSystem::SetWindow(sf::RenderWindow* _pWindow)
     {
-        m_pWindow = pWindow;
+        m_pWindow = _pWindow;
     }
+
+    // -----------------------------------------------------------------------------
 
     bool CLogicSystem::ShouldTriggerPhaseChange() const
     {
         return m_ShouldChangePhase;
     }
 
+    // -----------------------------------------------------------------------------
+
     Game::CPhase::EType CLogicSystem::GetNextPhase() const
     {
         return Game::CPhase::MainMenu;
     }
 
-    void CLogicSystem::Update(float delta)
+    // -----------------------------------------------------------------------------
+
+    void CLogicSystem::Update(float _Delta)
     {
         if (!m_pPlayer || !m_pMap || !m_pWindow)
         {
@@ -53,67 +77,82 @@ namespace Logic
             return;
         }
 
-        m_MoveCooldown -= delta;
+        m_MoveCooldown -= _Delta;
         if (m_MoveCooldown > 0.0f)
-            return;
-
-        constexpr float stepSize = 40.0f;
-        Core::AABB2Float currentAABB = m_pPlayer->GetAABB();
-        Core::AABB2Float newAABB = currentAABB;
-
-        bool moveLeft = sf::Keyboard::isKeyPressed(sf::Keyboard::A);
-        bool moveRight = sf::Keyboard::isKeyPressed(sf::Keyboard::D);
-
-        if (!moveLeft && !moveRight)
-            return;
-
-        // Bewegung vorbereiten
-        if (moveLeft)
         {
-            newAABB.SetMin({ currentAABB.GetMin()[0] - stepSize, currentAABB.GetMin()[1] });
-            newAABB.SetMax({ currentAABB.GetMax()[0] - stepSize, currentAABB.GetMax()[1] });
+            return;
+        }
+
+        constexpr float StepSize = 40.0f;
+
+        Core::AABB2Float CurrentAABB = m_pPlayer->GetAABB();
+        Core::AABB2Float NewAABB = CurrentAABB;
+
+        bool MoveLeft = sf::Keyboard::isKeyPressed(sf::Keyboard::A);
+        bool MoveRight = sf::Keyboard::isKeyPressed(sf::Keyboard::D);
+
+        if (!MoveLeft && !MoveRight)
+        {
+            return;
+        }
+
+        // -----------------------------------------------------------------------------
+        // Bewegung vorbereiten
+        // -----------------------------------------------------------------------------
+        if (MoveLeft)
+        {
+            NewAABB.SetMin({ CurrentAABB.GetMin()[0] - StepSize, CurrentAABB.GetMin()[1] });
+            NewAABB.SetMax({ CurrentAABB.GetMax()[0] - StepSize, CurrentAABB.GetMax()[1] });
+
             std::cout << "[Logic] Spieler will nach links\n";
         }
-        else if (moveRight)
+        else if (MoveRight)
         {
-            newAABB.SetMin({ currentAABB.GetMin()[0] + stepSize, currentAABB.GetMin()[1] });
-            newAABB.SetMax({ currentAABB.GetMax()[0] + stepSize, currentAABB.GetMax()[1] });
+            NewAABB.SetMin({ CurrentAABB.GetMin()[0] + StepSize, CurrentAABB.GetMin()[1] });
+            NewAABB.SetMax({ CurrentAABB.GetMax()[0] + StepSize, CurrentAABB.GetMax()[1] });
+
             std::cout << "[Logic] Spieler will nach rechts\n";
         }
 
-        // Bildschirmgrenzen beachten
-        float winWidth = static_cast<float>(m_pWindow->getSize().x);
-        if (newAABB.GetMin()[0] < 0 || newAABB.GetMax()[0] > winWidth)
+        // -----------------------------------------------------------------------------
+        // Bildschirmgrenzen prüfen
+        // -----------------------------------------------------------------------------
+        float WinWidth = static_cast<float>(m_pWindow->getSize().x);
+        if (NewAABB.GetMin()[0] < 0 || NewAABB.GetMax()[0] > WinWidth)
         {
             std::cout << "[Logic] Bewegung abgelehnt (Fensterrand erreicht)\n";
             return;
         }
 
+        // -----------------------------------------------------------------------------
         // Kollision mit Hindernis prüfen
-        auto it = m_pMap->BeginEntity(newAABB, Data::SEntityCategory::Obstacle);
-        while (it != m_pMap->EndEntity())
+        // -----------------------------------------------------------------------------
+        auto It = m_pMap->BeginEntity(NewAABB, Data::SEntityCategory::Obstacle);
+        while (It != m_pMap->EndEntity())
         {
-            const auto& obstacle = *it;
-            const auto& obstacleAABB = obstacle.GetAABB();
+            const auto& Obstacle = *It;
+            const auto& ObstacleAABB = Obstacle.GetAABB();
 
-            if (obstacleAABB.Intersects(newAABB))
+            if (ObstacleAABB.Intersects(NewAABB))
             {
                 std::cout << "[Logic] Kollision mit Hindernis erkannt!\n";
                 m_ShouldChangePhase = true;
                 m_NextPhase = Game::CPhase::Unload;
-                return; 
+                return;
             }
 
-            it = m_pMap->NextEntity(it, newAABB, Data::SEntityCategory::Obstacle);
+            It = m_pMap->NextEntity(It, NewAABB, Data::SEntityCategory::Obstacle);
         }
 
-       
-        m_pPlayer->SetAABB(newAABB);
+        // -----------------------------------------------------------------------------
+        // Spielerposition aktualisieren
+        // -----------------------------------------------------------------------------
+        m_pPlayer->SetAABB(NewAABB);
 
         auto* pFacet = static_cast<Graphics::CFacet*>(m_pPlayer->GetFacet(Data::CEntity::GraphicsFacet));
         if (pFacet)
         {
-            pFacet->SetPosition(newAABB.GetMin()[0], newAABB.GetMin()[1]);
+            pFacet->SetPosition(NewAABB.GetMin()[0], NewAABB.GetMin()[1]);
         }
 
         std::cout << "[Logic] Spieler bewegt\n";

@@ -1,0 +1,1209 @@
+
+////////////////////////////////////////////////////////////////////////////////
+/// General naming
+////////////////////////////////////////////////////////////////////////////////
+
+    /// -----------------------------------------------------------------------------
+    /// Do not use acronyms but write out names. Exception from the rule are well
+    /// known and commonly accepted acronyms.
+    /// -----------------------------------------------------------------------------
+
+        /***********/
+        /* Correct */
+        /***********/
+        class CMyVeryLongClassName
+        {
+            ...
+        };
+
+        class CGPS                  // GPS is a known acronym
+        {
+            ...
+        };
+
+        /*************/
+        /* Incorrect */
+        /*************/
+        class CMVLCN                // Unknown acronym
+        {
+            ...
+        };
+
+////////////////////////////////////////////////////////////////////////////////
+/// File naming
+////////////////////////////////////////////////////////////////////////////////
+
+    /// -----------------------------------------------------------------------------
+    /// File names and directory names are lower case only. Tokens within a file
+    /// name are separated by underscores. Source files should be named after the
+    /// main class. A source file name starts with the library prefix followed by an
+    /// underscore. The prefix should not contains more than five characters.
+    /// -----------------------------------------------------------------------------
+
+        /***********/
+        /* Correct */
+        /***********/
+        math_tan.h
+        math_tan.cpp
+
+        /*************/
+        /* Incorrect */
+        /*************/
+        mathematical_tan.h
+        mathematical_tan.cpp
+
+        mathtan.h
+        mathtan.cpp
+
+        /// -----------------------------------------------------------------------------
+        /// C++ header files have the extension *.h, while source files have the 
+        /// extension *.cpp.
+        /// -----------------------------------------------------------------------------
+
+        /***********/
+        /* Correct */
+        /***********/
+        math_tan.h
+        math_tan.cpp
+
+        /*************/
+        /* Incorrect */
+        /*************/
+        math_tan.hpp
+        math_tan.src
+
+////////////////////////////////////////////////////////////////////////////////
+/// Namespace naming
+////////////////////////////////////////////////////////////////////////////////
+
+    /// -----------------------------------------------------------------------------
+    /// Namespace names start with a capital letter and must not contain more than
+    /// five characters. When using acronyms as names they should clearly represent
+    /// the abbreviated name. In the best case it are well known acronyms.
+    /// -----------------------------------------------------------------------------
+
+        /***********/
+        /* Correct */
+        /***********/
+        namespace Math
+        {
+            ...
+        }
+
+        namespace Gfx
+        {
+            ...
+        }
+
+        /*************/
+        /* Incorrect */
+        /*************/
+        namespace Graphics  // More than five characters
+        {
+            ...
+        }
+
+        namespace graph     // Name starts with a lower case
+        {
+            ...
+        }
+
+        namespace GRPHX     // Not a meaningful acronym
+        {
+            ...
+        }
+
+////////////////////////////////////////////////////////////////////////////////
+/// Naming of classes, enumerations, structs, unions, and interfaces
+////////////////////////////////////////////////////////////////////////////////
+
+    /// -----------------------------------------------------------------------------
+    /// Class names start with a capital 'C'. Class names are mixed case, the first
+    /// letter of each internal world is capitalized. The internal words of a class
+    /// name should be nouns.
+    /// -----------------------------------------------------------------------------
+
+        /***********/
+        /* Correct */
+        /***********/
+        class CFoo;
+
+        /*************/
+        /* Incorrect */
+        /*************/
+        class Foo;
+        class foo;
+        class cFoo;
+
+    /// -----------------------------------------------------------------------------
+    /// Enumerations refer to the class conventions, but start with a capital 'E'.
+    /// -----------------------------------------------------------------------------
+
+        /***********/
+        /* Correct */
+        /***********/
+        enum EFoo;
+
+        /*************/
+        /* Incorrect */
+        /*************/
+        enum Foo;
+        enum foo;
+        enum eFoo;
+
+    /// -----------------------------------------------------------------------------
+    /// Structs refer to the class conventions, but start with a capital 'S'.
+    /// -----------------------------------------------------------------------------
+
+        /***********/
+        /* Correct */
+        /***********/
+        struct SFoo;
+
+        /*************/
+        /* Incorrect */
+        /*************/
+        struct Foo;
+        struct foo;
+        struct sFoo;
+
+    /// -----------------------------------------------------------------------------
+    /// Unions refer to the class conventions, but start with a capital 'U'.
+    /// -----------------------------------------------------------------------------
+
+        /***********/
+        /* Correct */
+        /***********/
+        union UFoo;
+
+        /*************/
+        /* Incorrect */
+        /*************/
+        union Foo;
+        union foo;
+        union uFoo;
+
+    /// -----------------------------------------------------------------------------
+    /// Interfaces are complete abstract classes and refer to the class conventions,
+    /// but start with a capital 'I'.
+    /// -----------------------------------------------------------------------------
+
+        /***********/
+        /* Correct */
+        /***********/
+        class ICodec
+        {
+            private:
+
+                virtual void Method() = 0;
+        };
+
+        /*************/
+        /* Incorrect */
+        /*************/
+        class Codec
+        {
+            private:
+
+                virtual void Method() = 0;
+        };
+
+        class ICodec
+        {
+            private:
+
+                int m_X;    // Not a complete abstract class, because complete abstract classes only contain abstract methods.
+
+            private:
+
+                virtual void Method() = 0;
+        };
+
+////////////////////////////////////////////////////////////////////////////////
+/// Function and method naming
+////////////////////////////////////////////////////////////////////////////////
+
+    /// -----------------------------------------------------------------------------
+    /// Method names are mixed case. The first letter of each word is capitalized.
+    /// The first word has to be a verb.
+    /// -----------------------------------------------------------------------------
+
+        /***********/
+        /* Correct */
+        /***********/
+        void Test();
+        const std::string& GetName() const;
+
+        /*************/
+        /* Incorrect */
+        /*************/
+        void Test_My_Engine();                      // Low lines
+        const std::string& getName() const;         // First letter of word is a lower case
+        const std::string& StreetName() const;      // First word is not a verb
+
+////////////////////////////////////////////////////////////////////////////////
+/// Variable naming
+////////////////////////////////////////////////////////////////////////////////
+
+    /// -----------------------------------------------------------------------------
+    /// Variable names are mixed case. The first letter of each internal word is 
+    /// capitalized. Pointer types start with a number of 'p' characters according to
+    /// their number of indirections. References start with a character 'r'. Do not
+    /// use unknown acronyms, but write out the names.
+    ///
+    /// Depending on the scope of the variable the following prefixes are used:
+    ///
+    /// | Scope    | Prefix    | Example              |
+    /// |----------|-----------|----------------------|
+    /// | Local    | No Prefix | SomeLocalVariable    |
+    /// | Argument | _         | _SomeArgument        |  
+    /// | Member   | m_        | m_SomeMemberVariable |
+    /// | Static   | s_        | s_SomeStaticVariable |
+    /// | Global   | g_        | g_SomeGlobalVariable |
+    /// -----------------------------------------------------------------------------
+
+        /***********/
+        /* Correct */
+        /***********/
+        int        SomeLocalVariable;
+        int*       pSomeLocalPointer;
+        int**      ppSomeLocalPointer;
+        int&       rSomeLocalReference;
+        int        g_SomeGlobalVariable;
+        static int s_SomeStaticVariable;
+        int        m_SomeMemberVariable;
+        int        _SomeArgument;
+
+        class CFoo
+        {
+            public:
+
+                static int  s_SomeStaticVariable;
+                static int* s_pSomeStaticPointerVariable;
+
+            public:
+
+                int  m_SomeMemberVariable;
+                int* m_pSomePointerMemberVariable;
+                int& m_rSomeReferenceMemberVariable;
+
+            public:
+
+                void Method(int _SomeArgument, int* _SomePointerArgument, int& _rSomeReferenceArgument)
+                {
+                    int  SomeLocalVariable;
+                    int* SomeLocalPointerVariable;
+                    int& SomeLocalReferenceVariable;
+                }
+        };
+
+        /*************/
+        /* Incorrect */
+        /*************/
+        int   someLocalVariable;
+        int   somelocalvariable;
+        int   some_local_variable;
+        int*  SomeLocalPointer;
+        int*  Somelocalpointer;
+        int** pSomeLocalPointer;
+        int&  SomeLocalReference;
+        int   SomeGlobalVariable;
+        int   SOMEGLOBALVARIABLE;
+        int   SOME_GLOBAL_VARIABLE;
+
+        class CFoo
+        {
+            public:
+
+                static int const SOME_STATIC_VARIABLE = 4;      // Start with s_, only the first letter of internal words is capitalized, no low lines
+
+            public:
+
+                int SomeMemberVariable;                         // Missing m_
+
+            public:
+
+                void Method(int SomeArgument)                   // Missing _
+                {
+                    int  someLocalVariable;                     // Start with capital letter
+                    int* SomeLocalVariable;                     // Missing 'p' at the start.
+                    int& SomeLocalVariable;                     // Missing 'r' at the start.
+                }
+        };
+
+////////////////////////////////////////////////////////////////////////////////
+/// Type naming via using
+////////////////////////////////////////////////////////////////////////////////
+
+    /// -----------------------------------------------------------------------------
+    /// Use using declarations instead of typedef. Types defined by using
+    /// declarations start with a capital letter as prefix according to the used
+    /// base type.
+    ///
+    /// | Base Type         | Prefix | Example                                     |
+    /// |-------------------|--------|---------------------------------------------|
+    /// | class             | C      | using CPoint           = Gfx::CPoint2D;     |
+    /// | struct            | S      | using SPoint           = Gfx::SPoint2D;     |  
+    /// | enum              | E      | using EColor           = Gfx::EColor;       |
+    /// | union             | U      | using UCast            = Gfx::UCast;        |
+    /// | primitive         | B      | using BInt             = int;               |
+    /// | unknown           | X      | using XItem            = TItem;             |
+    /// | function pointer  | F      | using FFunctionPointer = void (*)(float);   |
+    /// | member pointer    | M      | using MMemberPointer   = int (CPoint2D::*); |
+    /// -----------------------------------------------------------------------------
+
+        /***********/
+        /* Correct */
+        /***********/
+        using CPoint           = Gfx::CPoint2D;     // Base type is class
+        using SPoint           = Gfx::SPoint2D;     // Base type is struct
+        using EColor           = Gfx::EColor;       // Base type is enum
+        using UCast            = Gfx::UCast;        // Base type is union
+        using BInt             = int;               // Base type is a primitive type
+        using XItem            = TItem;             // Base type is a template parameter and it is not known if it is a primitive or a complex type
+        using FFunctionPointer = void (*)(float);   // Base type is a function pointer
+        using MMemberPointer   = int (CPoint2D::*); // Base type is member pointer
+
+        /*************/
+        /* Incorrect */
+        /*************/
+        typedef Gfx::CPoint2D CPoint2D;             // Typedef instead of using
+        using Point  = Gfx::CPoint2D;               // Missing Prefix
+        using Point  = Gfx::SPoint2D;               // Missing Prefix
+        using color  = Gfx::EColor;                 // Missing Prefix, first letter is not a capital
+        using uCast  = Gfx::UCast;                  // Prefix is a lower case
+        using XInt   = int;                         // Wrong prefix since the base type is known
+        using X_Item = TItem;                       // Underline
+
+////////////////////////////////////////////////////////////////////////////////
+/// Using namespace declarations
+////////////////////////////////////////////////////////////////////////////////
+
+    /// -----------------------------------------------------------------------------
+    /// Avoid using declarations in header files. The best way is to locate using
+    /// declarations inside of methods and not to use complete namespaces but only
+    /// specific names. 
+    /// -----------------------------------------------------------------------------
+
+        /***********/
+        /* Correct */
+        /***********/
+        void Append(std::list<int>& _rList, int _Value)
+        {
+            using std::list;
+
+            ...
+        }
+
+        /*************/
+        /* Incorrect */
+        /*************/
+        #pragma once
+
+        #include <list>		
+        using namespace std;    // using declaration in header file
+
+////////////////////////////////////////////////////////////////////////////////
+/// Naming of template parameters
+////////////////////////////////////////////////////////////////////////////////
+
+    /// -----------------------------------------------------------------------------
+    /// Template parameters start with the prefix 'T', even if the parameter is a
+    /// primitive type.
+    /// -----------------------------------------------------------------------------
+
+        /***********/
+        /* Correct */
+        /***********/
+        template <class TAllocator, typename TValue, int TSize>
+        class CContainer
+        {
+            ...
+        };
+
+        /*************/
+        /* Incorrect */
+        /*************/
+        template <class Allocator, typename Value, int BSize>   // Wrong prefixes
+        class CContainer
+        {
+            ...
+        };
+
+////////////////////////////////////////////////////////////////////////////////
+/// Macro naming
+////////////////////////////////////////////////////////////////////////////////
+
+    /// -----------------------------------------------------------------------------
+    /// Macros contain only capitals. Combinations of multiple words are separated by
+    /// low lines. The first word represents the name of the project, in which the
+    /// macro is defined.
+    /// -----------------------------------------------------------------------------
+
+        /***********/
+        /* Correct */
+        /***********/
+        #define GFX_RESOLUTION_WIDTH 640
+        #define CORE_EMPTY_STATEMENT
+
+        /*************/
+        /* Incorrect */
+        /*************/
+        #define RESOLUTION_WIDTH 640    // Missing project prefix
+        #define CoreEmptyStatement      // Contains lower cases, separation without low lines
+        #define Core_Empty_Statement    // Contains lower cases
+
+////////////////////////////////////////////////////////////////////////////////
+/// Comment style
+////////////////////////////////////////////////////////////////////////////////
+
+    /// -----------------------------------------------------------------------------
+    /// Comments inside of methods should be written as in the correct example below.
+    /// Comments to describe API methods should use the Doxygen style as shown below.
+    /// Do not use the '/*' ... '*/' comment style. Do not place comments before the
+    /// declaration of a method but before its implementation. Separate the method
+    /// implementations by a comment line as below.
+    /// -----------------------------------------------------------------------------
+
+        /***********/
+        /* Correct */
+        /***********/
+        void MethodA()
+        {
+            // -----------------------------------------------------------------------------
+            // Comment inside of a method.
+            // -----------------------------------------------------------------------------
+            ...
+        }
+
+        // -----------------------------------------------------------------------------
+
+        void MethodB()
+        {
+            // -----------------------------------------------------------------------------
+            // Comment inside of a method.
+            // -----------------------------------------------------------------------------
+            ...
+        }
+
+        // -----------------------------------------------------------------------------
+
+        void MethodC()
+        {
+            int LocalVariable;  ///< Doxygen comment style to describe a variable
+
+            // -----------------------------------------------------------------------------
+            // Comment inside of a method.
+            // -----------------------------------------------------------------------------
+            ...
+        }
+
+        g_GlobalVariable;       ///< Doxygen comment style to describe a variable
+
+        class CFoo
+        {
+            public:
+
+                int m_X;        ///< Doxygen comment style to describe a variable
+        };
+
+        ////////////////////////////////////////////////////////////////////////////////
+        /// \fn int Add(int _Value)
+        ///
+        /// \brief Short description of the method.
+        ///
+        /// Long description of the method.
+        ///
+        /// \param _Value The value to be added.
+        /// \return the number of added values
+        ////////////////////////////////////////////////////////////////////////////////
+        int Add(int _Value)
+        {
+            ...
+        }
+
+        /*************/
+        /* Incorrect */
+        /*************/
+        class CFoo
+        {
+            public:
+
+                int m_X;                // Not a Doxygen comment style to describe a variable
+
+            public:
+
+                ////////////////////////////////////////////////////////////////////////////////
+                /// \fn int Add(int _Value)
+                ///
+                /// \brief Short description of the method.
+                ///
+                /// Long description of the method.
+                ///
+                /// \param _Value The value to be added.
+                /// \return the number of added values
+                ////////////////////////////////////////////////////////////////////////////////
+                int Add(int _Value);    // API documentation inside of the declaration
+        };
+
+        void MethodA()
+        {
+            // Wrong comment style inside of the method
+            ...
+        }
+
+        // Missing comment line
+
+        void MethodB()
+        {
+            // -----------------------------------------------------------------------------
+            // Comment inside of a method.
+            // -----------------------------------------------------------------------------
+            ...
+        }
+
+////////////////////////////////////////////////////////////////////////////////
+/// Include guards
+////////////////////////////////////////////////////////////////////////////////
+
+    /// -----------------------------------------------------------------------------
+    /// Use #pragma once instead of classical include guards via #define.
+    /// -----------------------------------------------------------------------------
+
+        /***********/
+        /* Correct */
+        /***********/
+        #pragma once
+
+        /*************/
+        /* Incorrect */
+        /*************/
+        #ifndef __INCLUDE_CON_VECTOR_H_
+        #define __INCLUDE_CON_VECTOR_H_
+
+        ...
+
+        #endif // __INCLUDE_CON_VECTOR_H_
+
+////////////////////////////////////////////////////////////////////////////////
+/// Include directives
+////////////////////////////////////////////////////////////////////////////////
+
+    /// -----------------------------------------------------------------------------
+    /// Avoid #include directives in header files. Instead use forward declarations
+    /// whenever possible.
+    /// -----------------------------------------------------------------------------
+
+        /***********/
+        /* Correct */
+        /***********/
+        namespace Gfx
+        {
+            class CPoint2D;                                     // Forward declaration
+        } // namespace Gfx
+
+        void Add(CPoint2D* _pPoint1, CPoint2D& _rPoint2);       // Only references to CPoint2D
+
+        /*************/
+        /* Incorrect */
+        /*************/
+        #include "gfx_point2d.h"                                // Unnecessary #include directive
+
+        void Add(CPoint2D* _pPoint1, CPoint2D& _rPoint2);       // Only references to CPoint2D
+
+        /// -----------------------------------------------------------------------------
+        /// Separate extern and intern #include directives starting with the internal
+        /// header files.
+        /// -----------------------------------------------------------------------------
+
+        /***********/
+        /* Correct */
+        /***********/
+        #include "core_assert.h"    // Internal header file
+
+        #include "gfx_point2d.h"    // Internal header file
+
+        #include <list>             // External header file
+        #include <stdlib.h>         // External header file
+
+        /*************/
+        /* Incorrect */
+        /*************/
+        #include <list>             // External header file
+        #include "core_assert.h"    // Internal header file
+        #include <stdlib.h>         // External header file
+        #include "gfx_point2d.h"    // Internal header file
+
+        /// -----------------------------------------------------------------------------
+        /// Sort blocks of #include directives alphabetically.
+        /// -----------------------------------------------------------------------------
+
+        /***********/
+        /* Correct */
+        /***********/
+        #include "core/core_assert.h"
+
+        #include "game/game_state.h"
+
+        #include "gfx/gfx_point2d.h"
+        #include "gfx/gfx_rectangle.h"
+
+        #include <stdlib.h>
+        #include <windows.h>
+
+        /*************/
+        /* Incorrect */
+        /*************/
+        #include "gfx/gfx_rectangle.h"
+        #include "gfx/gfx_point2d.h"
+
+        #include "core/core_assert.h"
+
+        #include "game/game_state.h"
+
+        #include <windows.h>
+        #include <stdlib.h>
+
+////////////////////////////////////////////////////////////////////////////////
+/// Indentions
+////////////////////////////////////////////////////////////////////////////////
+
+    /// -----------------------------------------------------------------------------
+    /// Indentions are four spaces. Do not use tabs, but replace those by spaces.
+    /// -----------------------------------------------------------------------------
+
+        /***********/
+        /* Correct */
+        /***********/
+        if (X < 10)
+        {
+            ++ X;
+        }
+
+        for (int Index = 0; Index < 19; ++ Index)
+        {
+            cout << Index;
+        }
+
+        /*************/
+        /* Incorrect */
+        /*************/
+        if (X < 10)
+        {
+          ++ X;
+        }
+
+        for (int Index = 0; Index < 19; ++ Index)
+        {
+        cout << Index;
+        }
+
+    /// -----------------------------------------------------------------------------
+    /// Class sections defined via 'public', 'private', and 'protected' also have
+    /// indentions of four spaces.
+    /// -----------------------------------------------------------------------------
+
+        /***********/
+        /* Correct */
+        /***********/
+        class CCodec
+        {
+            public:
+
+                void Method();
+        };
+
+        /*************/
+        /* Incorrect */
+        /*************/
+        class CCodec
+        {
+        public:
+
+            void Method();
+        };
+
+        class CCodec
+        {
+            public:
+
+            void Method();
+        };
+
+////////////////////////////////////////////////////////////////////////////////
+/// Spaces
+////////////////////////////////////////////////////////////////////////////////
+
+    /// -----------------------------------------------------------------------------
+    /// Place one space between objects of binary operators.
+    /// -----------------------------------------------------------------------------
+
+        /***********/
+        /* Correct */
+        /***********/
+        int X = Y + 4;
+
+        if (Y == A)
+        {
+            ...
+        }
+
+        /*************/
+        /* Incorrect */
+        /*************/
+        int X=Y+4;
+
+        if (Y==A)
+        {
+            ...
+        }
+
+    /// -----------------------------------------------------------------------------
+    /// Place one space between 'if', 'for', and 'while' and the opening bracket.
+    /// -----------------------------------------------------------------------------
+
+        /***********/
+        /* Correct */
+        /***********/
+        if (X == 0)
+        {
+            ...
+        }
+
+        /*************/
+        /* Incorrect */
+        /*************/
+        if(X == 0)
+        {
+            ...
+        }
+
+    /// -----------------------------------------------------------------------------
+    /// Place one space between the members of a 'for' loop.
+    /// -----------------------------------------------------------------------------
+
+        /***********/
+        /* Correct */
+        /***********/
+        for (int X = 0; X < 10; ++ X)
+        {
+            ...
+        }
+
+        /*************/
+        /* Incorrect */
+        /*************/
+        for (int X = 0;X < 10;++ X)
+        {
+        }
+
+    /// -----------------------------------------------------------------------------
+    /// Place one space between the arguments of a method.
+    /// -----------------------------------------------------------------------------
+
+        /***********/
+        /* Correct */
+        /***********/
+        void Test(int _Arg1, int _Arg2, int _Arg3);
+
+        /*************/
+        /* Incorrect */
+        /*************/
+        void Test(int _Arg1,int _Arg2,int _Arg3);
+
+////////////////////////////////////////////////////////////////////////////////
+/// Brackets
+////////////////////////////////////////////////////////////////////////////////
+
+    /// -----------------------------------------------------------------------------
+    /// Always encapsulate the bodies of conditions and loops with brackets. The
+    /// opening and the closing brackets are placed to the left in the same column.
+    /// -----------------------------------------------------------------------------
+
+        /***********/
+        /* Correct */
+        /***********/
+        if (X == 0)
+        {
+            ++ X;
+        }
+
+        /*************/
+        /* Incorrect */
+        /*************/
+        if (X == 0) ++ X;
+
+        if (X == 0) {
+            ++ X;
+        }
+
+////////////////////////////////////////////////////////////////////////////////
+/// Inlining
+////////////////////////////////////////////////////////////////////////////////
+
+    /// -----------------------------------------------------------------------------
+    /// Separate method declaration and implementation.
+    /// -----------------------------------------------------------------------------
+
+        /***********/
+        /* Correct */
+        /***********/
+        #pragma once
+
+        void SomeGlobalMethod();
+
+        template <typename T>
+        class CArray
+        {
+            public:
+
+                void SomeMemberMethod();
+        };
+
+        void SomeGlobalMethod()
+        {
+            ...
+        }
+
+        // -----------------------------------------------------------------------------
+
+        template <typename T>
+        void CArray<T>::SomeMemberMethod()
+        {
+            ...
+        }
+
+        /*************/
+        /* Incorrect */
+        /*************/
+        #pragma once
+
+        void SomeGlobalMethod()             // Combination of implementation and declaration
+        {
+            ...
+        }
+
+        template <typename T>
+        class CArray
+        {
+            public:
+
+                void SomeMemberMethod()     // Combination of implementation and declaration
+                {
+                    ...
+                }
+        };
+
+    /// -----------------------------------------------------------------------------
+    /// Do not use extra *.inl files to implement inline methods.
+    /// -----------------------------------------------------------------------------
+
+        /***********/
+        /* Correct */
+        /***********/
+        #pragma once
+
+        inline void SomeGlobalMethod();
+
+        inline void SomeGlobalMethod()
+        {
+            ...
+        }
+
+        /*************/
+        /* Incorrect */
+        /*************/
+        #pragma once                        // Start of header file
+
+        inline void SomeGlobalMethod();
+
+        #include "gfx_tools.inl"
+
+        #pragma once                        // Start of inline file
+
+        inline void SomeGlobalMethod()
+        {
+            ...
+        }
+
+    /// -----------------------------------------------------------------------------
+    /// Only declare short and simple methods as inline.
+    /// -----------------------------------------------------------------------------
+
+        /***********/
+        /* Correct */
+        /***********/
+        inline int GetValue() const;                    // Getters are usually very short
+
+        /*************/
+        /* Incorrect */
+        /*************/
+        inline void HandleAVeryComplexProblem() const;  // Complex and long method
+
+////////////////////////////////////////////////////////////////////////////////
+/// Casts
+////////////////////////////////////////////////////////////////////////////////
+
+    /// -----------------------------------------------------------------------------
+    /// Do not use C style casts, but use the C++ style casts.
+    /// -----------------------------------------------------------------------------
+
+        /***********/
+        /* Correct */
+        /***********/
+        CBaseClass& rFoo       = static_cast<CBaseClass&>(rChildClass);
+        float       FloatValue = static_cast<float>(IntValue);
+        float*      pFloats    = reinterpret_cast<float*>(pInts);
+        const int*  pValues    = const_cast<const int*>(pData);
+
+        /*************/
+        /* Incorrect */
+        /*************/
+        CBaseClass& rFoo       = (CBaseClass&) rChildClass;     // C style case
+        float       FloatValue = (float) IntValue;              // C style case
+        float       FloatValue = float(IntValue);               // C style case
+        float*      pFloats    = (float*) pInts;                // C style case
+        const int*  pValues    = (const int*) pData;            // C style case
+
+////////////////////////////////////////////////////////////////////////////////
+/// Virtual methods
+////////////////////////////////////////////////////////////////////////////////
+
+    /// -----------------------------------------------------------------------------
+    /// Do not declare virtual and pure virtual methods as public. Instead use public
+    /// stub methods to call the private virtual methods. Use the override keyword to
+    /// indicate that an inherited method is specialized.
+    /// -----------------------------------------------------------------------------
+
+        /***********/
+        /* Correct */
+        /***********/
+        class CFoo
+        {
+            public:
+
+                inline void Test();
+                inline void AnotherTest();
+
+            private:
+
+                virtual void InternTest() = 0;
+                virtual void InternAnotherTest();
+        };
+
+        inline void CFoo::Test()
+        {
+            InternTest();   
+        }
+
+        // -----------------------------------------------------------------------------
+
+        inline void CFoo::AnotherTest()
+        {
+            InternAnotherTest();
+        }
+
+        // -----------------------------------------------------------------------------
+
+        void CFoo::InternAnotherTest()
+        {
+            ...
+        }
+
+        /*************/
+        /* Incorrect */
+        /*************/
+        class CFoo
+        {
+            public:
+
+                virtual void InternTest() = 0;
+                virtual void InternAnotherTest();
+        };
+
+        void CFoo::InternAnotherTest()
+        {
+            ...
+        }
+
+////////////////////////////////////////////////////////////////////////////////
+/// Variable initialization
+////////////////////////////////////////////////////////////////////////////////
+
+    /// -----------------------------------------------------------------------------
+    /// Do not initialize member variables inside of the body of the constructor, but
+    /// inside of the initialization list.
+    /// -----------------------------------------------------------------------------
+
+        /***********/
+        /* Correct */
+        /***********/
+        CPoint2D::CPoint2D(int _X, int _Y)
+            : m_X(_X)
+            : m_Y(_Y)
+        {
+        }
+
+        /*************/
+        /* Incorrect */
+        /*************/
+        CPoint2D::CPoint2D(int _X, int _Y)
+        {
+            m_X = _X;
+            m_Y = _Y;
+        }
+
+    /// -----------------------------------------------------------------------------
+    /// Initialize variables in the order of their declaration. Also initialize class
+    /// members or base classes with default constructor.
+    /// -----------------------------------------------------------------------------
+
+        /***********/
+        /* Correct */
+        /***********/
+        class CCar : public CVehicle
+        {
+            public:
+
+                CCar();
+
+            private:
+
+                int    m_PS;
+                bool   m_HasAirBag;
+                bool   m_HasAllWheelBrake;
+                CWheel m_Wheel1;
+                CWheel m_Wheels[4];
+        };
+
+        CCar::CCar()
+            : CVehicle          ()
+            , m_PS              (0)
+            , m_HasAirBag       (false)
+            , m_HasAllWheelBrake(false)
+            , m_Wheel1          ()
+            , m_Wheels          {}
+        {
+        }
+
+        /*************/
+        /* Incorrect */
+        /*************/
+        class CCar : public CVehicle
+        {
+            public:
+
+                CCar();
+
+            private:
+
+                int    m_PS;
+                bool   m_HasAirBag;
+                bool   m_HasAllWheelBrake;
+                CWheel m_Wheel1;
+        };
+
+        CCar::CCar()
+            : m_PS              (0)         // Missing initialization of base class
+            , m_HasAllWheelBrake(false)     // Wrong order
+            , m_HasAirBag       (false)     // Missing initialization of member class
+        {
+        }
+
+////////////////////////////////////////////////////////////////////////////////
+/// Null pointer
+////////////////////////////////////////////////////////////////////////////////
+
+    /// -----------------------------------------------------------------------------
+    /// Use nullptr instead of 0 or NULL.
+    /// -----------------------------------------------------------------------------
+
+        /***********/
+        /* Correct */
+        /***********/
+        if (pPointer != nullptr)
+        {
+            ...
+        }
+
+        /*************/
+        /* Incorrect */
+        /*************/
+        if (pPointer != NULL)
+        {
+            ...
+        }
+
+        if (pPointer != 0)
+        {
+            ...
+        }
+
+////////////////////////////////////////////////////////////////////////////////
+/// Macros
+////////////////////////////////////////////////////////////////////////////////
+
+    /// -----------------------------------------------------------------------------
+    /// Avoid using macros, but try to replace them by template methods.
+    /// -----------------------------------------------------------------------------
+
+        /***********/
+        /* Correct */
+        /***********/
+        template <typename T>
+        T Sum(T _X, T _Y)
+        {
+            return _X + _Y;
+        }
+
+        /*************/
+        /* Incorrect */
+        /*************/
+        #define CORE_SUM(X, Y) (X + Y)
+
+////////////////////////////////////////////////////////////////////////////////
+/// Const declarations
+////////////////////////////////////////////////////////////////////////////////
+
+    /// -----------------------------------------------------------------------------
+    /// Use const declarations whenever possible.
+    /// -----------------------------------------------------------------------------
+
+        /***********/
+        /* Correct */
+        /***********/
+        int GetValue() const;                   // Getters are read-only methods.
+        void Append(const T& _rItem);
+        const std::string& GetName() const;
+
+        /*************/
+        /* Incorrect */
+        /*************/
+        int GetValue();                         // Getters are read-only methods.
+        void Append(T& _rItem);                 // _rItem is allowed to be modified inside of Append
+        std::string& GetName();                 // The returned name is allowed to be modified.
+
+////////////////////////////////////////////////////////////////////////////////
+/// Templates
+////////////////////////////////////////////////////////////////////////////////
+
+    /// -----------------------------------------------------------------------------
+    /// Use the 'class' keyword for complex template parameters and 'typename' for
+    /// primitive or unknown template parameters.
+    /// -----------------------------------------------------------------------------
+
+        /***********/
+        /* Correct */
+        /***********/
+        template <class TAllocator, typename TPrimitiveValue, typename TUnknown>
+        class CFoo
+        {
+        };
+
+        /*************/
+        /* Incorrect */
+        /*************/
+        template <typename TAllocator, class TPrimitiveValue, class TUnknown>
+        class CFoo
+        {
+        };

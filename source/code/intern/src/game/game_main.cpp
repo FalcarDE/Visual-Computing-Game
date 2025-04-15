@@ -1,27 +1,38 @@
-#include <exception>
-#include <iostream>
-#include <cassert>
 #include "game_application.h"  // Verwende deine echte Fassade!
 
-class CMyException : public std::exception
+#include <cassert>
+#include <exception>
+#include <iostream>
+
+class CGameMainException : public std::exception
 {
 public:
-    const char* what() const noexcept override { return "CMyException occurred"; }
+
+    const char* what() const noexcept override
+    {
+        return "CGameMainException occurred";
+    }
 };
 
 int main()
 {
     try
     {
+        // -----------------------------------------------------------------------------
+        // Startup
+        // -----------------------------------------------------------------------------
         std::cout << "[Main] Startup...\n";
         Game::Application::Startup();
         std::cout << "[Main] Startup erfolgreich\n";
 
+        // -----------------------------------------------------------------------------
+        // Run
+        // -----------------------------------------------------------------------------
         std::cout << "[Main] Run...\n";
         Game::Application::Run();
         std::cout << "[Main] Run beendet\n";
     }
-    catch (CMyException& e)
+    catch (CGameMainException& e)
     {
         std::cerr << "[EXCEPTION] Benutzerdefiniert: " << e.what() << std::endl;
         assert(false && "CMyException wurde gefangen!");
@@ -39,11 +50,14 @@ int main()
 
     try
     {
+        // -----------------------------------------------------------------------------
+        // Shutdown
+        // -----------------------------------------------------------------------------
         std::cout << "[Main] Shutdown...\n";
         Game::Application::Shutdown();
         std::cout << "[Main] Shutdown abgeschlossen\n";
     }
-    catch (CMyException& e)
+    catch (CGameMainException& e)
     {
         std::cerr << "[EXCEPTION] Fehler beim Shutdown (CMyException): " << e.what() << std::endl;
         assert(false && "CMyException im Shutdown!");

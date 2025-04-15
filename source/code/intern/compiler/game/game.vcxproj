@@ -175,7 +175,14 @@ $(SolutionDir)..\extern\sfml\inc\SFML;
   <ItemGroup>
     <ClCompile Include="..\..\src\game\game_load_map_phase.cpp" />
     <ClCompile Include="..\..\src\game\game_unload_map_phase.cpp" />
-    <ClInclude Include="..\..\src\game\*.h" />
+    <ClInclude Include="..\..\src\game\game_application.h" />
+    <ClInclude Include="..\..\src\game\game_finalize_phase.h" />
+    <ClInclude Include="..\..\src\game\game_initialize_phase.h" />
+    <ClInclude Include="..\..\src\game\game_load_map_phase.h" />
+    <ClInclude Include="..\..\src\game\game_main_menu_phase.h" />
+    <ClInclude Include="..\..\src\game\game_phase.h" />
+    <ClInclude Include="..\..\src\game\game_play_phase.h" />
+    <ClInclude Include="..\..\src\game\game_unload_map_phase.h" />
     <ClCompile Include="..\..\src\game\game_application.cpp" />
     <ClCompile Include="..\..\src\game\game_finalize_phase.cpp" />
     <ClCompile Include="..\..\src\game\game_initialize_phase.cpp" />

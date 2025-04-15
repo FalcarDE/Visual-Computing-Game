@@ -1,12 +1,9 @@
-
 #pragma once
 
 #include "data_entity_category.h"
 #include "data_entity_iterator.h"
 #include "data_sector.h"
 #include "../core/core_aabb.h"
-
-using Core::AABB2Float;
 
 namespace Data
 {
@@ -22,13 +19,15 @@ namespace Data
 
         CEntityIterator EndEntity();
 
-        void AddEntity(CEntity& entity);
+        void AddEntity(CEntity& _rEntity);
 
-        CSector* GetSectorAt(int x, int y);
+        CSector* GetSectorAt(int _X, int _Y);
 
     private:
+
         static constexpr int NumColumns = 8;
         static constexpr int NumRows = 6;
+
         CSector m_Sectors[NumRows * NumColumns];
     };
 }

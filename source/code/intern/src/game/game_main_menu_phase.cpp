@@ -1,19 +1,32 @@
 ﻿#include "game_main_menu_phase.h"
+
 #include <iostream>
 
 namespace Game
 {
+    // -----------------------------------------------------------------------------
+
     CMainMenuPhase::CMainMenuPhase() = default;
+
+    // -----------------------------------------------------------------------------
+
     CMainMenuPhase::~CMainMenuPhase() = default;
+
+    // -----------------------------------------------------------------------------
 
     CMainMenuPhase& CMainMenuPhase::GetInstance()
     {
-        static CMainMenuPhase instance;
-        return instance;
+        static CMainMenuPhase s_Instance;
+        return s_Instance;
     }
+
+    // -----------------------------------------------------------------------------
 
     void CMainMenuPhase::OnInternEnter()
     {
+        // -----------------------------------------------------------------------------
+        // Fenster & UI initialisieren
+        // -----------------------------------------------------------------------------
         std::cout << "[MainMenu] Betreten\n";
 
         m_pWindow = std::make_unique<sf::RenderWindow>(sf::VideoMode(800, 600), "Main Menu");
@@ -44,27 +57,38 @@ namespace Game
         m_ExitText.setPosition(375, 315);
     }
 
+    // -----------------------------------------------------------------------------
+
     CPhase::EType CMainMenuPhase::OnInternRun()
     {
-        sf::Event event;
+        // -----------------------------------------------------------------------------
+        // Hauptereignisschleife des Hauptmenüs
+        // -----------------------------------------------------------------------------
+        sf::Event Event;
+
         while (m_pWindow->isOpen())
         {
-            while (m_pWindow->pollEvent(event))
+            while (m_pWindow->pollEvent(Event))
             {
-                if (event.type == sf::Event::Closed)
-                    return CPhase::Finalize;
-
-                if (event.type == sf::Event::MouseButtonPressed)
+                if (Event.type == sf::Event::Closed)
                 {
-                    auto mousePos = sf::Mouse::getPosition(*m_pWindow);
-                    if (m_StartButton.getGlobalBounds().contains((sf::Vector2f)mousePos))
+                    return CPhase::Finalize;
+                }
+
+                if (Event.type == sf::Event::MouseButtonPressed)
+                {
+                    sf::Vector2i MousePos = sf::Mouse::getPosition(*m_pWindow);
+
+                    if (m_StartButton.getGlobalBounds().contains(static_cast<sf::Vector2f>(MousePos)))
                     {
                         std::cout << "[MainMenu] Start gedrückt → Wechsle zu LoadMap-Phase\n";
                         return CPhase::Load;
                     }
 
-                    if (m_ExitButton.getGlobalBounds().contains((sf::Vector2f)mousePos))
+                    if (m_ExitButton.getGlobalBounds().contains(static_cast<sf::Vector2f>(MousePos)))
+                    {
                         return CPhase::Finalize;
+                    }
                 }
             }
 
@@ -79,8 +103,13 @@ namespace Game
         return CPhase::Finalize;
     }
 
+    // -----------------------------------------------------------------------------
+
     void CMainMenuPhase::OnInternLeave()
     {
+        // -----------------------------------------------------------------------------
+        // Ressourcen schließen
+        // -----------------------------------------------------------------------------
         std::cout << "[MainMenu] Verlassen\n";
         m_pWindow->close();
     }

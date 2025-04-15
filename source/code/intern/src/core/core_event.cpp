@@ -1,41 +1,52 @@
 #include "core_event.h"
+
 #include <iostream>
 
 namespace Core
 {
+    // -----------------------------------------------------------------------------
+
     CEventQueue& GetEventQueue()
     {
-        static CEventQueue instance;
-        return instance;
+        static CEventQueue s_Instance;
+        return s_Instance;
     }
 
-    void CEventQueue::AddListener(IEventListener* listener)
+    // -----------------------------------------------------------------------------
+
+    void CEventQueue::AddListener(IEventListener* _pListener)
     {
-        m_Listeners.push_back(listener);
+        m_Listeners.push_back(_pListener);
     }
 
-    void CEventQueue::AddEvent(std::unique_ptr<IEvent> event)
+    // -----------------------------------------------------------------------------
+
+    void CEventQueue::AddEvent(std::unique_ptr<IEvent> _pEvent)
     {
-        m_Events.push(std::move(event));
+        m_Events.push(std::move(_pEvent));
     }
+
+    // -----------------------------------------------------------------------------
 
     void CEventQueue::ProcessEvents()
     {
         while (!m_Events.empty())
         {
-            const std::unique_ptr<IEvent>& event = m_Events.front();
+            const std::unique_ptr<IEvent>& rEvent = m_Events.front();
 
-            for (IEventListener* listener : m_Listeners)
+            for (IEventListener* pListener : m_Listeners)
             {
-                if (listener)
+                if (pListener)
                 {
-                    listener->OnEvent(*event);
+                    pListener->OnEvent(*rEvent);
                 }
             }
 
             m_Events.pop();
         }
     }
+
+    // -----------------------------------------------------------------------------
 
     void CEventQueue::Clear()
     {
@@ -44,6 +55,4 @@ namespace Core
             m_Events.pop();
         }
     }
-
-
 }
