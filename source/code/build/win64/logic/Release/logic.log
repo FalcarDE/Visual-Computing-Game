@@ -1,0 +1,5 @@
+﻿  logic_facet.cpp
+  logic_system.cpp
+C:\Users\hoang\Desktop\Visual-Computing-Game\source\code\intern\src\logic\logic_system.h(5,10): error C1083: Datei (Include) kann nicht geöffnet werden: "SFML/Graphics.hpp": No such file or directory
+  (Quelldatei „../../src/logic/logic_system.cpp“ wird kompiliert)
+  

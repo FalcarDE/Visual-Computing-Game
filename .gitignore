@@ -1,0 +1,5 @@
+# Ignoriere den extern-Ordner im source/code Verzeichnis
+/source/code/extern/
+
+# Ignoriere den .vs-Ordner im source/code/intern Verzeichnis
+/source/code/intern/.vs/

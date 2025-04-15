@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Graphic>
+    <Name>Ground</Name>
+    <Texture>graphics/textures/ground.png</Texture>
+    <Width>40</Width>
+    <Height>40</Height>
+</Graphic>

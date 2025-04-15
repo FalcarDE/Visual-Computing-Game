@@ -1,0 +1,5 @@
+﻿  graphics_facets.cpp
+  graphics_play_phase.cpp
+C:\Users\hoang\Desktop\Visual-Computing-Game\source\code\intern\src\graphics\graphics_play_phase.h(3,10): error C1083: Datei (Include) kann nicht geöffnet werden: "SFML/Graphics.hpp": No such file or directory
+  (Quelldatei „../../src/graphics/graphics_play_phase.cpp“ wird kompiliert)
+  

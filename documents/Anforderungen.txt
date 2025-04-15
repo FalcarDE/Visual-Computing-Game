@@ -1,0 +1,78 @@
+Verzeichnisstruktur auf dem Datenträger
+
+Projektstruktur in Visual Studio
+	Teilmodule
+		Core		(static lib)
+		Data    	(static lib)
+		Game     	(exe)
+		Graphics	(static lib)
+		GUI			(static lib)
+		Logic		(static lib)
+
+Baubar
+	- Keine Warnungen auf Warnstufe 4
+	- Keine Fehler
+	- Keine absoluten Pfade bei Projekteinstellungen und Texturen
+
+Ausführbar
+	- Bitte bei der Abgabe ein ausführbares Exexcutable beilegen
+
+Codestyle
+	- Als Dokument im Hauptordner (bei Codestyle Sahm die Kopie beilegen)
+
+Grundlegende Programmiertechnik
+	Beispiele
+		- Sinnvolle Verwendung von Containern
+		- Korrekte Übergabe von Argumenten
+		- Schnittstellendefinitionen
+		- new/delete
+
+main Methode
+	- try-catch
+	
+Game Applikation Klasse
+	- Startup
+	- Shutdown
+	- Run (Hauptschleife mit Aufruf der Phasen)
+	
+Zustandsautomat (Phasen)
+	- Initialize
+	- Finalize
+	- Main Menu
+	- Load Map
+	- Play
+	- Unload Map
+
+MetaEntitySystem
+	- Siehe Vorlage in Moodle
+	
+EntitySystem
+	- Entitäten mit Facetten in Teilmodulen
+	- Siehe Vorlage in Moodle
+
+MapSystem
+	- Siehe Vorlage in Moodle
+	- Vollständige und korrekte Implementierung der Iteratoren
+
+EventSytem
+	- AddEvent + ProcessEvents
+	- FireEvent
+	- EventListener Definition
+
+Main Menu
+	- 2 Buttons (Start, Exit)
+
+Renderer
+	- Extra Klasse für Entity Ausgabe
+	- Verwendung der Iteratoren des MapSystems
+
+Eingabe/Ausgabe
+	- Spielfigur
+	- Plattform
+	- Hindernis
+	- Steuerung der Spielfigur links - rechts (keine Animation, kein Springen)
+
+XML oder Jason
+	- Definition der MetaEntitäten
+	- Definition der Map
+	- Einlesen und Verteilen an Teilmodule

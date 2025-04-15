@@ -1,0 +1,10 @@
+﻿  data_map.cpp
+C:\Users\hoang\Desktop\Visual-Computing-Game\source\code\intern\src\data\data_map.cpp(79,104): warning C4100: "_Category": Unreferenzierter formaler Parameter
+C:\Users\hoang\Desktop\Visual-Computing-Game\source\code\intern\src\data\data_map.cpp(135,13): warning C4566: Das durch den universellen Zeichennamen "\u2192" dargestellte Zeichen kann in der aktuellen Codepage (1252) nicht dargestellt werden.
+C:\Users\hoang\Desktop\Visual-Computing-Game\source\code\intern\src\data\data_map.cpp(155,30): warning C4566: Das durch den universellen Zeichennamen "\u2192" dargestellte Zeichen kann in der aktuellen Codepage (1252) nicht dargestellt werden.
+C:\Users\hoang\Desktop\Visual-Computing-Game\source\code\intern\src\data\data_map.cpp(160,30): warning C4566: Das durch den universellen Zeichennamen "\u2192" dargestellte Zeichen kann in der aktuellen Codepage (1252) nicht dargestellt werden.
+C:\Users\hoang\Desktop\Visual-Computing-Game\source\code\intern\src\data\data_map.cpp(161,30): warning C4566: Das durch den universellen Zeichennamen "\u2192" dargestellte Zeichen kann in der aktuellen Codepage (1252) nicht dargestellt werden.
+  main_test.cpp
+C:\Users\hoang\Desktop\Visual-Computing-Game\source\code\intern\src\data\main_test.cpp(44,70): warning C4566: Das durch den universellen Zeichennamen "\u2192" dargestellte Zeichen kann in der aktuellen Codepage (1252) nicht dargestellt werden.
+  Code wird generiert...
+  data.vcxproj -> C:\Users\hoang\Desktop\Visual-Computing-Game\source\code\build\win64\data\Debug\data_debug.lib

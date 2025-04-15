@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Graphic>
+    <Name>Player</Name>
+    <Texture>https://placehold.co/32x48/2196F3/ffffff.png?text=PL</Texture>
+    <Width>32</Width>
+    <Height>48</Height>
+</Graphic>

@@ -1,0 +1,3 @@
+﻿  Das System kann den angegebenen Pfad nicht finden.
+C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(166,5): error MSB3073: Der Befehl "copy ..\..\build\win64\core\Release\*.lib ..\..\build\win64
+C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(166,5): error MSB3073: :VCEnd" wurde mit dem Code 1 beendet.

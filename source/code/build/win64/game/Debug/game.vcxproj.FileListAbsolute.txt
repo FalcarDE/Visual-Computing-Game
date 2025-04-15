@@ -1,0 +1,2 @@
+C:\Users\hoang\Desktop\Visual-Computing-Game\source\code\build\win64\game\Debug\game_debug.exe
+C:\Users\hoang\Desktop\Visual-Computing-Game\source\code\build\win64\game\Debug\game.vcxproj.Up2Date

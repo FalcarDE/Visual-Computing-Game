@@ -1,0 +1,7 @@
+﻿  game_play_phase.cpp
+C:\Users\hoang\Desktop\Visual-Computing-Game\source\code\intern\src\game\game_play_phase.cpp(222,22): warning C4566: Das durch den universellen Zeichennamen "\u2192" dargestellte Zeichen kann in der aktuellen Codepage (1252) nicht dargestellt werden.
+  game.vcxproj -> C:\Users\hoang\Desktop\Visual-Computing-Game\source\code\build\win64\game\Debug\game_debug.exe
+  Der Befehl "pwsh.exe" ist entweder falsch geschrieben oder
+  konnte nicht gefunden werden.
+  C:\Users\hoang\Desktop\Visual-Computing-Game\source\code\build\win64\game\Debug\game_debug.exe -> C:\Users\hoang\Desktop\Visual-Computing-Game\source\bin\game_debug.exe
+  1 Datei(en) kopiert
